@@ -29,7 +29,9 @@ ENV APPLICATIONINSIGHTS_CONNECTION_STRING=${applicationinsights_connection_strin
 ARG logto_oss_survey_endpoint=
 ENV LOGTO_OSS_SURVEY_ENDPOINT=${logto_oss_survey_endpoint}
 
-RUN pnpm -r build
+# Raise Node's heap ceiling for the build: the console vite bundle peaks above
+# the ~2 GB default old-space limit and OOMs the builder without this.
+RUN NODE_OPTIONS=--max-old-space-size=4096 pnpm -r build
 
 ### Add official connectors ###
 ARG additional_connector_args
