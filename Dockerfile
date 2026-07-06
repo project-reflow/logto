@@ -54,8 +54,12 @@ WORKDIR /etc/logto
 # - Upgrade OpenSSL 3.5.6-r0 -> 3.5.7-r0 (clears CVE-2026-34182/-45447/-7383/-9076/-34180/-34181
 #   /-34183/-42764/-42766/-42767/-42769/-45445/-45446/-42768/-42770 in libssl3/libcrypto3).
 # - Refresh the globally-bundled npm so its vendored picomatch reaches >=4.0.4 (CVE-2026-33671).
+# - Drop npm's vendored undici (only pulled in by node-gyp for build-time native-module
+#   downloads, never exercised by the runtime `npm run start`). npm bundles undici 6.x, which
+#   can't reach the 7.x fixes, so removal clears CVE-2026-12151/AIKIDO-2026-10385/-10369.
 RUN apk --no-cache upgrade openssl libcrypto3 libssl3 \
   && npm install -g npm@latest \
+  && rm -rf /usr/local/lib/node_modules/npm/node_modules/undici \
   && npm cache clean --force
 
 ARG logto_oss_survey_endpoint=
