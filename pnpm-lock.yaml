@@ -10,10 +10,11 @@ overrides:
   '@smithy/config-resolver@<4.4.0': ^4.4.0
   '@tootallnate/once@<3.0.1': ^3.0.1
   '@xmldom/xmldom@<0.8.13': ^0.8.13
+  adm-zip@<0.6.0: ^0.6.0
   ajv@<6.14.0: ^6.14.0
   ajv@>=7.0.0-alpha.0 <8.18.0: ^8.18.0
-  axios@<1.15.2: ^1.15.2
-  basic-ftp@<=5.2.2: ^5.3.0
+  axios@<1.16.1: ^1.16.1
+  basic-ftp@<6.0.0: ^6.0.0
   brace-expansion@<1.1.13: ^1.1.13
   brace-expansion@>=2.0.0 <2.0.3: ^2.0.3
   brace-expansion@>=4.0.0 <5.0.6: ^5.0.6
@@ -21,13 +22,16 @@ overrides:
   diff@>=6.0.0 <8.0.3: ^8.0.3
   dompurify@<3.4.9: ^3.4.9
   esbuild: ^0.25.0
+  fast-uri@>=2.3.1 <3.1.3: ^3.1.3
   fast-xml-parser@>=4.0.0-beta.0 <5.5.7: ^5.5.7
   flatted@<=3.4.1: ^3.4.2
   follow-redirects@<=1.15.11: ^1.16.0
   form-data@<2.5.6: ^2.5.6
   form-data@>=4.0.0 <4.0.6: ^4.0.6
   formidable@<3.5.4: ^3.5.4
-  immutable@>=4.0.0-rc.1 <4.3.8: ^4.3.8
+  http-proxy-middleware@<3.0.7: ^3.0.7
+  i18next@<26.0.6: ^26.0.6
+  immutable@>=4.0.0-rc.1 <4.3.9: ^4.3.9
   ip-address@<=10.1.0: ^10.1.1
   joi@<17.13.4: ^17.13.4
   js-yaml@>=4.0.0 <4.2.0: ^4.2.0
@@ -41,7 +45,8 @@ overrides:
   minimatch@>=9.0.0 <9.0.7: ^9.0.7
   nanoid@>=4.0.0 <5.0.9: ^5.0.9
   node-forge@<1.4.0: ^1.4.0
-  nodemailer@<=8.0.8: ^8.0.9
+  node-rsa@<2.0.0: ^2.0.0
+  nodemailer@<9.0.1: ^9.0.1
   path-to-regexp@>=8.0.0 <8.4.0: ^8.4.0
   picomatch@<2.3.2: ^2.3.2
   picomatch@>=4.0.0 <4.0.4: ^4.0.4
@@ -52,7 +57,7 @@ overrides:
   react-router@>=6.7.0 <6.30.4: ^6.30.4
   react-router-dom@>=6.7.0 <6.30.4: ^6.30.4
   rollup@>=4.0.0 <4.59.0: ^4.59.0
-  shell-quote@>=1.1.0 <=1.8.3: ^1.8.4
+  shell-quote@<1.9.0: ^1.9.0
   tar@<=7.5.15: ^7.5.16
   tmp@<0.2.6: ^0.2.6
   uuid@<11.1.1: ^11.1.1
@@ -224,8 +229,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.0.6
+        version: 26.3.6(typescript@5.5.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -270,7 +275,7 @@ importers:
         version: 6.1.0(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.3.6(typescript@5.5.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-modal:
         specifier: ^3.15.1
         version: 3.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3078,8 +3083,8 @@ importers:
         specifier: ^14.0.0
         version: 14.0.0
       nodemailer:
-        specifier: ^8.0.9
-        version: 8.0.11
+        specifier: ^9.0.1
+        version: 9.0.3
       snakecase-keys:
         specifier: ^8.0.1
         version: 8.0.1
@@ -3903,8 +3908,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.0.6
+        version: 26.3.6(typescript@5.5.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -4009,7 +4014,7 @@ importers:
         version: 2.2.0(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.3.6(typescript@5.5.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-markdown:
         specifier: ^9.0.0
         version: 9.0.3(@types/react@18.3.3)(react@18.3.1)
@@ -4194,8 +4199,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.0.6
+        version: 26.3.6(typescript@5.5.3)
       iconv-lite:
         specifier: 0.6.3
         version: 0.6.3
@@ -4375,8 +4380,8 @@ importers:
         specifier: ^0.7.39
         version: 0.7.39
       adm-zip:
-        specifier: ^0.5.14
-        version: 0.5.14
+        specifier: ^0.6.0
+        version: 0.6.0
       eslint:
         specifier: ^8.56.0
         version: 8.57.0
@@ -4471,8 +4476,8 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.0.6
+        version: 26.3.6(typescript@5.5.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -4496,7 +4501,7 @@ importers:
         version: 6.1.0(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.3.6(typescript@5.5.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       stylelint:
         specifier: ^15.0.0
         version: 15.11.0(typescript@5.5.3)
@@ -4766,8 +4771,8 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.0.6
+        version: 26.3.6(typescript@5.5.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -4833,7 +4838,7 @@ importers:
         version: 7.56.1(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.3.6(typescript@5.5.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-modal:
         specifier: ^3.15.1
         version: 3.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5419,8 +5424,8 @@ importers:
         specifier: ^2.9.1
         version: 2.9.2
       adm-zip:
-        specifier: ^0.5.14
-        version: 0.5.14
+        specifier: ^0.6.0
+        version: 0.6.0
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -5431,8 +5436,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       http-proxy-middleware:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.7
+        version: 3.0.7
       mime:
         specifier: ^4.0.4
         version: 4.0.4
@@ -6646,6 +6651,10 @@ packages:
   '@noble/hashes@1.8.0':
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
     engines: {node: ^14.21.3 || >=16}
+
+  '@noble/hashes@2.2.0':
+    resolution: {integrity: sha512-IYqDGiTXab6FniAgnSdZwgWbomxpy9FtYvLKs7wCUs2a8RkITG+DFGO1DM9cr+E3/RgADRpFjrKVaJ1z6sjtEg==}
+    engines: {node: '>= 20.19.0'}
 
   '@nodable/entities@2.1.0':
     resolution: {integrity: sha512-nyT7T3nbMyBI/lvr6L5TyWbFJAI9FTgVRakNoBqCD+PmID8DzFrrNdLLtHMwMszOtqZa8PAOV24ZqDnQrhQINA==}
@@ -9077,9 +9086,9 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adm-zip@0.5.14:
-    resolution: {integrity: sha512-DnyqqifT4Jrcvb8USYjp6FHtBpEIz1mnXu6pTRHZ0RL69LbQYiO+0lDFg5+OKA7U29oWSs3a/i8fhn8ZcceIWg==}
-    engines: {node: '>=12.0'}
+  adm-zip@0.6.0:
+    resolution: {integrity: sha512-XleryMhbuksdKtofnWZ9Sk+4CUTbms4Mb/EU32SZwToAyZ5RgVos/ki8n+yr0LWHOGKuakbXTuuYNHLQjhddgg==}
+    engines: {node: '>=14.0'}
 
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -9261,9 +9270,6 @@ packages:
   asap@2.0.6:
     resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
 
-  asn1@0.2.6:
-    resolution: {integrity: sha512-ix/FxPn0MDjeyJ7i/yoHGFt/EX6LyNbxSEhPPXODPL+KB0VPk86UYfL0lMdy+KCnv+fmvIzySwaK5COwqVbWTQ==}
-
   asn1js@3.0.5:
     resolution: {integrity: sha512-FVnvrKJwpt9LP2lAMl8qZswRNm3T4q9CON+bxldk2iwk3FFpuwhx2FfinyitizWHsVYyaY+y5JzDR0rCMV5yTQ==}
     engines: {node: '>=12.0.0'}
@@ -9319,8 +9325,8 @@ packages:
     resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
 
-  axios@1.16.0:
-    resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
+  axios@1.18.1:
+    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
 
   axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
@@ -9404,8 +9410,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  basic-ftp@5.3.1:
-    resolution: {integrity: sha512-bopVNp6ugyA150DDuZfPFdt1KZ5a94ZDiwX4hMgZDzF+GttD80lEy8kj98kbyhLXnPvhtIo93mdnLIjpCAeeOw==}
+  basic-ftp@6.0.1:
+    resolution: {integrity: sha512-3ilxa3n4276wGQp/ImRAuz4ALdsj/2Wd3FqoZBZlajDYnByCZ0JMb4+26Rde0wGXIbM0G2HWSfr/Fi8b21KX8g==}
     engines: {node: '>=10.0.0'}
 
   better-path-resolve@1.0.0:
@@ -10970,8 +10976,8 @@ packages:
   fast-safe-stringify@2.1.1:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
 
-  fast-uri@3.1.2:
-    resolution: {integrity: sha512-rVjf7ArG3LTk+FS6Yw81V1DLuZl1bRbNrev6Tmd/9RaroeeRRJhAt7jg/6YFxbvAQXUCavSoZhPPj6oOx+5KjQ==}
+  fast-uri@3.1.3:
+    resolution: {integrity: sha512-i70LwGWUduXqzicKXWshooq+sWL1K3WUU5rKZNG/0i3a1OSoX3HqhH5WbWwTmqWfor4urUakGPiRQcleRZTwOg==}
 
   fast-xml-builder@1.1.9:
     resolution: {integrity: sha512-jcyKVSEX13iseJqg7n/KWw+xnu/7fdrZ333Fac54KjHDIELVCfDDJXYIm6DTJ0Su4gSzrhqiK0DzY/wZbF40mw==}
@@ -11526,9 +11532,9 @@ packages:
     resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
     engines: {node: '>= 14'}
 
-  http-proxy-middleware@3.0.5:
-    resolution: {integrity: sha512-GLZZm1X38BPY4lkXA01jhwxvDoOkkXqjgVyUzVxiEK4iuRu03PZoYHhHRwxnfhQMDuaxi3vVri0YgSro/1oWqg==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+  http-proxy-middleware@3.0.7:
+    resolution: {integrity: sha512-iwbQltVlx8bCrqePUM8C+hllHvdawVhQJaLrj1X7qllkvFQdXFsr16pW/mo9+JDVjN+QO2XUx9jd8SmoFkE5qw==}
+    engines: {node: ^14.18.0 || ^16.10.0 || >=18.0.0}
 
   http-proxy@1.18.1:
     resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
@@ -11574,8 +11580,13 @@ packages:
   i18next-browser-languagedetector@8.0.0:
     resolution: {integrity: sha512-zhXdJXTTCoG39QsrOCiOabnWj2jecouOqbchu3EfhtSHxIB5Uugnm9JaizenOy39h7ne3+fLikIjeW88+rgszw==}
 
-  i18next@22.4.15:
-    resolution: {integrity: sha512-yYudtbFrrmWKLEhl6jvKUYyYunj4bTBCe2qIUYAxbXoPusY7YmdwPvOE6fx6UIfWvmlbCWDItr7wIs8KEBZ5Zg==}
+  i18next@26.3.6:
+    resolution: {integrity: sha512-Bu5Z2nAXgfVyM8xvW3jk9EKRIuX37PudsrBViThNFx7CR7aaYTpP01cxNB/E4c4UUzTDiAZRstEhsRfPOL/8xA==}
+    peerDependencies:
+      typescript: ^5 || ^6 || ^7
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -11605,8 +11616,8 @@ packages:
     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
     engines: {node: '>= 4'}
 
-  immutable@4.3.8:
-    resolution: {integrity: sha512-d/Ld9aLbKpNwyl0KiM2CT1WYvkitQ1TSvmRtkcV8FKStiDoA7Slzgjmb/1G2yhKM1p0XeNOieaTbFZmU1d3Xuw==}
+  immutable@4.3.9:
+    resolution: {integrity: sha512-ObHy4YN7ycwZOUCLI1/6svfyAFu7vL8RhAvVu/bh/RZW9EPlOyDaQ9jDQWCtdqzaXUjgXZCW1migtHE7YI7UGQ==}
 
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -13285,14 +13296,15 @@ packages:
     resolution: {integrity: sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==}
     engines: {node: '>=18'}
 
-  node-rsa@1.1.1:
-    resolution: {integrity: sha512-Jd4cvbJMryN21r5HgxQOpMEqv+ooke/korixNNK3mGqfGJmy0M77WDDzo/05969+OkMy3XW1UuZsSmW9KQm7Fw==}
+  node-rsa@2.0.0:
+    resolution: {integrity: sha512-7yfzccmBd5rm7pALJf709tPwLL987WvdT7LC/QK5Oxa5S2aabdBPjxRDxhWKkbfCc9/FiC82lwSc+ulGZHH44g==}
+    engines: {node: '>=20'}
 
   node-xmllint@1.0.0:
     resolution: {integrity: sha512-71UV2HRUP+djvHpdyatiuv+Y1o8hI4ZI7bMfuuoACMLR1JJCErM4WXAclNeHd6BgHXkqeqnnAk3wpDkSQWmFXw==}
 
-  nodemailer@8.0.11:
-    resolution: {integrity: sha512-nrO/pDAUKl+wXX+lx16tDLbnm0fW6sK/x8mgohaCpg+CdCEl482bD4tCuAZk2DyliruiNTIZxRCoWkDqJEnAiA==}
+  nodemailer@9.0.3:
+    resolution: {integrity: sha512-n+YP+NKwR5zRWa60k3GiQ6Q3B4KXCoAw40dAKeCtYn020iNN74aWK2liXIC3ZEATeGql7we3tE3t8QwhY0eskw==}
     engines: {node: '>=6.0.0'}
 
   nodemon@3.1.7:
@@ -14232,7 +14244,7 @@ packages:
   react-i18next@12.3.1:
     resolution: {integrity: sha512-5v8E2XjZDFzK7K87eSwC7AJcAkcLt5xYZ4+yTPDAW1i7C93oOY1dnr4BaQM7un4Hm+GmghuiPvevWwlca5PwDA==}
     peerDependencies:
-      i18next: '>= 19.0.0'
+      i18next: ^26.0.6
       react: '>= 16.8.0'
       react-dom: '*'
       react-native: '*'
@@ -14723,8 +14735,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shell-quote@1.8.4:
-    resolution: {integrity: sha512-VsC6n6vz1ihYYyZZwX7YZSF5l5x36ca17OC+a69h94YqB7X6XLwf+5MOgynYir2SLFUbl8gIYvBo8K8RoNQ6bQ==}
+  shell-quote@1.10.0:
+    resolution: {integrity: sha512-w1aiOKwKuRgtwAReIIj89puqg+I7GvX4IbLrvmhXbzQsj1+Zwi4VO3+fa6ZF91TWSjIxoEkKnMeHcLEODK5ZXA==}
     engines: {node: '>= 0.4'}
 
   shimmer@1.2.1:
@@ -18008,6 +18020,8 @@ snapshots:
 
   '@noble/hashes@1.8.0': {}
 
+  '@noble/hashes@2.2.0': {}
+
   '@nodable/entities@2.1.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -21018,7 +21032,7 @@ snapshots:
 
   acorn@8.17.0: {}
 
-  adm-zip@0.5.14: {}
+  adm-zip@0.6.0: {}
 
   agent-base@6.0.2:
     dependencies:
@@ -21055,7 +21069,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.2
+      fast-uri: 3.1.3
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -21225,10 +21239,6 @@ snapshots:
 
   asap@2.0.6: {}
 
-  asn1@0.2.6:
-    dependencies:
-      safer-buffer: 2.1.2
-
   asn1js@3.0.5:
     dependencies:
       pvtsutils: 1.3.5
@@ -21280,13 +21290,15 @@ snapshots:
 
   axe-core@4.7.0: {}
 
-  axios@1.16.0:
+  axios@1.18.1:
     dependencies:
       follow-redirects: 1.16.0(debug@4.4.1)
       form-data: 4.0.6
+      https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   axobject-query@3.2.1:
     dependencies:
@@ -21383,7 +21395,7 @@ snapshots:
 
   baseline-browser-mapping@2.10.37: {}
 
-  basic-ftp@5.3.1: {}
+  basic-ftp@6.0.1: {}
 
   better-path-resolve@1.0.0:
     dependencies:
@@ -22527,7 +22539,7 @@ snapshots:
       has-property-descriptors: 1.0.2
       has-proto: 1.0.3
       has-symbols: 1.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       internal-slot: 1.0.7
       is-array-buffer: 3.0.4
       is-callable: 1.2.7
@@ -22588,11 +22600,11 @@ snapshots:
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
       has-tostringtag: 1.0.2
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   es-shim-unscopables@1.0.2:
     dependencies:
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   es-to-primitive@1.2.1:
     dependencies:
@@ -23173,7 +23185,7 @@ snapshots:
 
   fast-safe-stringify@2.1.1: {}
 
-  fast-uri@3.1.2: {}
+  fast-uri@3.1.3: {}
 
   fast-xml-builder@1.1.9:
     dependencies:
@@ -23434,7 +23446,7 @@ snapshots:
       get-proto: 1.0.1
       gopd: 1.2.0
       has-symbols: 1.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       math-intrinsics: 1.1.0
 
   get-nonce@1.0.1: {}
@@ -23473,7 +23485,7 @@ snapshots:
 
   get-uri@6.0.1:
     dependencies:
-      basic-ftp: 5.3.1
+      basic-ftp: 6.0.1
       data-uri-to-buffer: 5.0.1
       debug: 4.4.1(supports-color@5.5.0)
       fs-extra: 8.1.0
@@ -23881,7 +23893,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  http-proxy-middleware@3.0.5:
+  http-proxy-middleware@3.0.7:
     dependencies:
       '@types/http-proxy': 1.17.15
       debug: 4.4.1(supports-color@5.5.0)
@@ -23946,9 +23958,9 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
 
-  i18next@22.4.15:
-    dependencies:
-      '@babel/runtime': 7.28.4
+  i18next@26.3.6(typescript@5.5.3):
+    optionalDependencies:
+      typescript: 5.5.3
 
   iconv-lite@0.4.24:
     dependencies:
@@ -23972,7 +23984,7 @@ snapshots:
 
   ignore@5.3.1: {}
 
-  immutable@4.3.8:
+  immutable@4.3.9:
     optional: true
 
   import-fresh@3.3.0:
@@ -24055,7 +24067,7 @@ snapshots:
   internal-slot@1.0.7:
     dependencies:
       es-errors: 1.3.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       side-channel: 1.1.0
 
   internmap@1.0.1: {}
@@ -24122,7 +24134,7 @@ snapshots:
 
   is-core-module@2.13.1:
     dependencies:
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   is-data-view@1.0.1:
     dependencies:
@@ -24225,7 +24237,7 @@ snapshots:
       call-bound: 1.0.4
       gopd: 1.2.0
       has-tostringtag: 1.0.2
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   is-set@2.0.3: {}
 
@@ -26298,13 +26310,13 @@ snapshots:
 
   node-releases@2.0.47: {}
 
-  node-rsa@1.1.1:
+  node-rsa@2.0.0:
     dependencies:
-      asn1: 0.2.6
+      '@noble/hashes': 2.2.0
 
   node-xmllint@1.0.0: {}
 
-  nodemailer@8.0.11: {}
+  nodemailer@9.0.3: {}
 
   nodemon@3.1.7:
     dependencies:
@@ -26799,7 +26811,7 @@ snapshots:
 
   pg-formatter@1.3.0:
     dependencies:
-      shell-quote: 1.8.4
+      shell-quote: 1.10.0
       yargs: 17.7.2
 
   pg-int8@1.0.1: {}
@@ -27018,9 +27030,10 @@ snapshots:
 
   postmark@4.0.5:
     dependencies:
-      axios: 1.16.0
+      axios: 1.18.1
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   preact@10.28.2: {}
 
@@ -27310,11 +27323,11 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  react-i18next@12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-i18next@12.3.1(i18next@26.3.6(typescript@5.5.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.28.4
       html-parse-stringify: 3.0.1
-      i18next: 22.4.15
+      i18next: 26.3.6(typescript@5.5.3)
       react: 18.3.1
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
@@ -27870,7 +27883,7 @@ snapshots:
     dependencies:
       '@authenio/xml-encryption': 2.0.2
       '@xmldom/xmldom': 0.8.13
-      node-rsa: 1.1.1
+      node-rsa: 2.0.0
       xml: 1.0.1
       xml-crypto: 6.1.2
       xml-escape: 1.1.0
@@ -27879,7 +27892,7 @@ snapshots:
   sass@1.77.8:
     dependencies:
       chokidar: 3.6.0
-      immutable: 4.3.8
+      immutable: 4.3.9
       source-map-js: 1.2.1
     optional: true
 
@@ -27943,7 +27956,7 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shell-quote@1.8.4: {}
+  shell-quote@1.10.0: {}
 
   shimmer@1.2.1: {}
 
@@ -29142,13 +29155,14 @@ snapshots:
 
   wait-on@8.0.1:
     dependencies:
-      axios: 1.16.0
+      axios: 1.18.1
       joi: 17.13.4
       lodash: 4.18.1
       minimist: 1.2.8
       rxjs: 7.8.1
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   walker@1.0.8:
     dependencies:
