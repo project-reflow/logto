@@ -29,7 +29,9 @@ ENV APPLICATIONINSIGHTS_CONNECTION_STRING=${applicationinsights_connection_strin
 ARG logto_oss_survey_endpoint=
 ENV LOGTO_OSS_SURVEY_ENDPOINT=${logto_oss_survey_endpoint}
 
-RUN pnpm -r build
+# Raise Node's heap ceiling for the build: the console vite bundle peaks above
+# the ~2 GB default old-space limit and OOMs the builder without this.
+RUN NODE_OPTIONS=--max-old-space-size=4096 pnpm -r build
 
 ### Add official connectors ###
 ARG additional_connector_args
@@ -47,6 +49,19 @@ RUN rm -rf .scripts pnpm-*.yaml packages/cloud
 ###### [STAGE] Seal ######
 FROM node:22-alpine AS app
 WORKDIR /etc/logto
+
+# Security: patch known base-image and bundled-tool vulnerabilities.
+# - Upgrade OpenSSL/libcrypto3/libssl3 to the latest Alpine patch (clears CVE-2026-34182/-45447
+#   /-7383/-9076/-34180/-34181/-34183/-42764/-42766/-42767/-42769/-45445/-45446/-42768/-42770).
+# - Refresh the globally-bundled npm so its vendored picomatch reaches >=4.0.4 (CVE-2026-33671).
+# - Drop npm's vendored undici (only pulled in by node-gyp for build-time native-module
+#   downloads, never exercised by the runtime `npm run start`). npm bundles undici 6.x, which
+#   can't reach the 7.x fixes, so removal clears CVE-2026-12151 and related advisories.
+RUN apk --no-cache upgrade openssl libcrypto3 libssl3 \
+  && npm install -g npm@latest \
+  && rm -rf /usr/local/lib/node_modules/npm/node_modules/undici \
+  && npm cache clean --force
+
 ARG logto_oss_survey_endpoint=
 ARG private_key_rotation_grace_period=0
 # Default to empty so external survey relaying stays opt-in for controlled builds/environments.
