@@ -63,7 +63,7 @@ overrides:
   tmp@<0.2.6: ^0.2.6
   uuid@<11.1.1: ^11.1.1
   vite@<=6.4.2: ^6.4.3
-  ws@>=7.0.0 <7.5.11: ^7.5.11
+  ws@>=7.0.0 <7.5.12: ^7.5.12
   ws@>=8.0.0 <8.21.1: ^8.21.1
   yaml@>=2.0.0 <2.8.3: ^2.8.3
 
@@ -15907,8 +15907,8 @@ packages:
     resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  ws@7.5.11:
-    resolution: {integrity: sha512-zS54Oen9bITtp7kp2XM3AydrCIq1D+HwJOuH+c+e4LfpL/lotP5osijd+UoMnxwAam1GN8R4KtLAyIrIcBNpiA==}
+  ws@7.5.13:
+    resolution: {integrity: sha512-rsKI6xDBFVf4r/x8XyChGK04QR/XHroxs/jUcoWvtEZM8TPU/X/uIY9B1CsSzYws9ZJb/6bbBu7dPhFW00CAoA==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -20766,7 +20766,7 @@ snapshots:
       mime-types: 2.1.35
       parse5: 6.0.1
       picomatch: 2.3.2
-      ws: 7.5.11
+      ws: 7.5.13
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -20791,7 +20791,7 @@ snapshots:
       mime-types: 2.1.35
       parse5: 6.0.1
       picomatch: 2.3.2
-      ws: 7.5.11
+      ws: 7.5.13
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -29329,7 +29329,7 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
 
-  ws@7.5.11: {}
+  ws@7.5.13: {}
 
   ws@8.21.1: {}
 
