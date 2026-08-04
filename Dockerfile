@@ -57,8 +57,24 @@ WORKDIR /etc/logto
 # - Drop npm's vendored undici (only pulled in by node-gyp for build-time native-module
 #   downloads, never exercised by the runtime `npm run start`). npm bundles undici 6.x, which
 #   can't reach the 7.x fixes, so removal clears CVE-2026-12151 and related advisories.
+# - Replace npm's vendored brace-expansion and ip-address with patched releases. npm@latest
+#   still ships brace-expansion 5.0.7 (CVE-2026-69152, CVE-2026-14257) and ip-address 10.2.0
+#   (CVE-2026-69192), so refreshing npm alone does not clear them. Both are drop-in: the
+#   replacements are semver patch/minor, ip-address has no dependencies, and brace-expansion
+#   5.0.9 needs balanced-match ^4.0.2, which npm already bundles. `npm install --prefix` is not
+#   usable here because it re-resolves npm's own manifest, which references unpublished
+#   internal packages, so unpack the tarballs over the vendored directories instead.
 RUN apk --no-cache upgrade openssl libcrypto3 libssl3 \
   && npm install -g npm@latest \
+  && for spec in brace-expansion@5.0.9 ip-address@10.3.1; do \
+       name="${spec%@*}"; \
+       npm pack "$spec" --pack-destination /tmp >/dev/null \
+       && tar -xzf /tmp/"$name"-*.tgz -C /tmp \
+       && rm -rf "/usr/local/lib/node_modules/npm/node_modules/$name" \
+       && mv /tmp/package "/usr/local/lib/node_modules/npm/node_modules/$name" \
+       || exit 1; \
+     done \
+  && rm -f /tmp/*.tgz \
   && rm -rf /usr/local/lib/node_modules/npm/node_modules/undici \
   && npm cache clean --force
 
