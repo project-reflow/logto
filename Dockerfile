@@ -50,23 +50,35 @@ RUN rm -rf .scripts pnpm-*.yaml packages/cloud
 FROM node:22-alpine AS app
 WORKDIR /etc/logto
 
+# Cache-bust for the layer below. BuildKit folds a build arg into a layer's cache key only when
+# the instruction actually reads it, so a bare ARG line would change nothing. Without this, the
+# `apk upgrade` has no input that varies between builds: `--pull` only re-resolves the floating
+# node:22-alpine tag, and when that digest has not moved the GHA cache serves the old upgrade
+# layer and the OS patch silently never lands. Pass the image tag so every release rebuilds it.
+ARG apk_cache_bust=
+
 # Security: patch known base-image and bundled-tool vulnerabilities.
-# - Upgrade OpenSSL/libcrypto3/libssl3 to the latest Alpine patch (clears CVE-2026-34182/-45447
-#   /-7383/-9076/-34180/-34181/-34183/-42764/-42766/-42767/-42769/-45445/-45446/-42768/-42770).
-# - Refresh the globally-bundled npm so its vendored picomatch reaches >=4.0.4 (CVE-2026-33671).
+# - Upgrade OpenSSL/libcrypto3/libssl3 to the latest Alpine patch.
+# - Refresh the globally-bundled npm, which carries its own vendored dependency tree.
 # - Drop npm's vendored undici (only pulled in by node-gyp for build-time native-module
 #   downloads, never exercised by the runtime `npm run start`). npm bundles undici 6.x, which
 #   can't reach the 7.x fixes, so removal clears CVE-2026-12151 and related advisories.
-# - Replace npm's vendored brace-expansion and ip-address with patched releases. npm@latest
-#   still ships brace-expansion 5.0.7 (CVE-2026-69152, CVE-2026-14257) and ip-address 10.2.0
-#   (CVE-2026-69192), so refreshing npm alone does not clear them. Both are drop-in: the
-#   replacements are semver patch/minor, ip-address has no dependencies, and brace-expansion
-#   5.0.9 needs balanced-match ^4.0.2, which npm already bundles. `npm install --prefix` is not
-#   usable here because it re-resolves npm's own manifest, which references unpublished
-#   internal packages, so unpack the tarballs over the vendored directories instead.
-RUN apk --no-cache upgrade openssl libcrypto3 libssl3 \
+# - Replace three of npm's vendored copies with patched releases. Refreshing npm does not clear
+#   them: npm 12.0.2 still ships brace-expansion 5.0.7 (CVE-2026-69152, CVE-2026-14257),
+#   ip-address 10.2.0 (CVE-2026-69192) and tar 7.5.19 (CVE-2026-73566, CVE-2026-59873). All
+#   three are drop-in. ip-address has no dependencies. brace-expansion 5.0.9 needs
+#   balanced-match ^4.0.2, which npm bundles at 4.0.4. tar 7.5.22 declares the same dependency
+#   set as 7.5.19, and npm already bundles every one of them at a satisfying version (chownr
+#   3.0.0, yallist 5.0.0, minipass 7.1.3, minizlib 3.1.0, @isaacs/fs-minipass 4.0.1); npm's own
+#   manifest asks for tar ^7.5.19, so 7.5.22 stays inside its declared range. `npm install
+#   --prefix` is not usable here because it re-resolves npm's own manifest, which references
+#   unpublished internal packages, so unpack the tarballs over the vendored directories instead.
+#   Keep tar last in the loop: `npm pack` uses npm's vendored tar, so replacing it before the
+#   other packs would run the untested copy for the rest of the loop.
+RUN echo "cache-bust: ${apk_cache_bust}" >/dev/null \
+  && apk --no-cache upgrade openssl libcrypto3 libssl3 \
   && npm install -g npm@latest \
-  && for spec in brace-expansion@5.0.9 ip-address@10.3.1; do \
+  && for spec in brace-expansion@5.0.9 ip-address@10.5.1 tar@7.5.22; do \
        name="${spec%@*}"; \
        npm pack "$spec" --pack-destination /tmp >/dev/null \
        && tar -xzf /tmp/"$name"-*.tgz -C /tmp \
