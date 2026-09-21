@@ -66,7 +66,7 @@ ARG apk_cache_bust=
 # - Replace three of npm's vendored copies with patched releases. Refreshing npm does not clear
 #   them: npm 12.0.2 still ships brace-expansion 5.0.7 (CVE-2026-69152, CVE-2026-14257),
 #   ip-address 10.2.0 (CVE-2026-69192) and tar 7.5.19 (CVE-2026-73566, CVE-2026-59873). All
-#   three are drop-in. ip-address has no dependencies. brace-expansion 5.0.9 needs
+#   three are drop-in. ip-address has no dependencies. brace-expansion 5.0.12 needs
 #   balanced-match ^4.0.2, which npm bundles at 4.0.4. tar 7.5.22 declares the same dependency
 #   set as 7.5.19, and npm already bundles every one of them at a satisfying version (chownr
 #   3.0.0, yallist 5.0.0, minipass 7.1.3, minizlib 3.1.0, @isaacs/fs-minipass 4.0.1); npm's own
@@ -78,7 +78,7 @@ ARG apk_cache_bust=
 RUN echo "cache-bust: ${apk_cache_bust}" >/dev/null \
   && apk --no-cache upgrade openssl libcrypto3 libssl3 \
   && npm install -g npm@latest \
-  && for spec in brace-expansion@5.0.9 ip-address@10.5.1 tar@7.5.22; do \
+  && for spec in brace-expansion@5.0.12 ip-address@10.7.2 tar@7.5.22; do \
        name="${spec%@*}"; \
        npm pack "$spec" --pack-destination /tmp >/dev/null \
        && tar -xzf /tmp/"$name"-*.tgz -C /tmp \
