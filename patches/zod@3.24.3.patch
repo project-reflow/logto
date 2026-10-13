@@ -1,0 +1,157 @@
+diff --git a/lib/helpers/parseUtil.js b/lib/helpers/parseUtil.js
+index 8190ef0a9ed51ea9954c66eda824edef5e244bc4..77e6a06d13e80e4c3773a47cf60550c99f95b2b8 100644
+--- a/lib/helpers/parseUtil.js
++++ b/lib/helpers/parseUtil.js
+@@ -36,7 +36,12 @@ const makeIssue = (params) => {
+ };
+ exports.makeIssue = makeIssue;
+ exports.EMPTY_PATH = [];
++// Cap the issues one parse collects. Without it, a large array or record of failing
++// elements allocates one issue per element and can exhaust the heap.
++exports.MAX_PARSE_ISSUES = 100;
+ function addIssueToContext(ctx, issueData) {
++    if (ctx.common.issues.length >= exports.MAX_PARSE_ISSUES)
++        return;
+     const overrideMap = (0, errors_1.getErrorMap)();
+     const issue = (0, exports.makeIssue)({
+         issueData: issueData,
+diff --git a/lib/index.mjs b/lib/index.mjs
+index ca7bec3995d7ecf025117bd764d636b1b8a6d55a..6f0b04a082bb2341b9e4fe0521d40778b30eb7ca 100644
+--- a/lib/index.mjs
++++ b/lib/index.mjs
+@@ -431,7 +431,12 @@ const makeIssue = (params) => {
+     };
+ };
+ const EMPTY_PATH = [];
++// Cap the issues one parse collects. Without it, a large array or record of failing
++// elements allocates one issue per element and can exhaust the heap.
++const MAX_PARSE_ISSUES = 100;
+ function addIssueToContext(ctx, issueData) {
++    if (ctx.common.issues.length >= MAX_PARSE_ISSUES)
++        return;
+     const overrideMap = getErrorMap();
+     const issue = makeIssue({
+         issueData: issueData,
+@@ -2359,7 +2364,7 @@ class ZodArray extends ZodType {
+                     exact: false,
+                     message: def.maxLength.message,
+                 });
+-                status.dirty();
++                return INVALID;
+             }
+         }
+         if (ctx.common.async) {
+@@ -2369,9 +2374,12 @@ class ZodArray extends ZodType {
+                 return ParseStatus.mergeArray(status, result);
+             });
+         }
+-        const result = [...ctx.data].map((item, i) => {
+-            return def.type._parseSync(new ParseInputLazyPath(ctx, item, ctx.path, i));
+-        });
++        const result = [];
++        for (let i = 0; i < ctx.data.length; i++) {
++            if (ctx.common.issues.length >= MAX_PARSE_ISSUES)
++                return INVALID;
++            result.push(def.type._parseSync(new ParseInputLazyPath(ctx, ctx.data[i], ctx.path, i)));
++        }
+         return ParseStatus.mergeArray(status, result);
+     }
+     get element() {
+@@ -3246,6 +3254,8 @@ class ZodRecord extends ZodType {
+         const keyType = this._def.keyType;
+         const valueType = this._def.valueType;
+         for (const key in ctx.data) {
++            if (ctx.common.issues.length >= MAX_PARSE_ISSUES)
++                return INVALID;
+             pairs.push({
+                 key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, key)),
+                 value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key], ctx.path, key)),
+diff --git a/lib/index.umd.js b/lib/index.umd.js
+index 8a9b6ac3b603d29ff12ff66a35ce34bd2058dee3..9673f6dd01df0737b5f3f7ec8813dfd30fd2d610 100644
+--- a/lib/index.umd.js
++++ b/lib/index.umd.js
+@@ -437,7 +437,12 @@
+         };
+     };
+     const EMPTY_PATH = [];
++    // Cap the issues one parse collects. Without it, a large array or record of failing
++    // elements allocates one issue per element and can exhaust the heap.
++    const MAX_PARSE_ISSUES = 100;
+     function addIssueToContext(ctx, issueData) {
++        if (ctx.common.issues.length >= MAX_PARSE_ISSUES)
++            return;
+         const overrideMap = getErrorMap();
+         const issue = makeIssue({
+             issueData: issueData,
+@@ -2365,7 +2370,7 @@
+                         exact: false,
+                         message: def.maxLength.message,
+                     });
+-                    status.dirty();
++                    return INVALID;
+                 }
+             }
+             if (ctx.common.async) {
+@@ -2375,9 +2380,12 @@
+                     return ParseStatus.mergeArray(status, result);
+                 });
+             }
+-            const result = [...ctx.data].map((item, i) => {
+-                return def.type._parseSync(new ParseInputLazyPath(ctx, item, ctx.path, i));
+-            });
++            const result = [];
++            for (let i = 0; i < ctx.data.length; i++) {
++                if (ctx.common.issues.length >= MAX_PARSE_ISSUES)
++                    return INVALID;
++                result.push(def.type._parseSync(new ParseInputLazyPath(ctx, ctx.data[i], ctx.path, i)));
++            }
+             return ParseStatus.mergeArray(status, result);
+         }
+         get element() {
+@@ -3252,6 +3260,8 @@
+             const keyType = this._def.keyType;
+             const valueType = this._def.valueType;
+             for (const key in ctx.data) {
++                if (ctx.common.issues.length >= MAX_PARSE_ISSUES)
++                    return INVALID;
+                 pairs.push({
+                     key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, key)),
+                     value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key], ctx.path, key)),
+diff --git a/lib/types.js b/lib/types.js
+index f5ad77f952c7d718e8ab1fcb4125c33d22383b2d..fe1d7ee37b279ca57c2563e64044f3e93195fef2 100644
+--- a/lib/types.js
++++ b/lib/types.js
+@@ -1843,7 +1843,7 @@ class ZodArray extends ZodType {
+                     exact: false,
+                     message: def.maxLength.message,
+                 });
+-                status.dirty();
++                return parseUtil_1.INVALID;
+             }
+         }
+         if (ctx.common.async) {
+@@ -1853,9 +1853,12 @@ class ZodArray extends ZodType {
+                 return parseUtil_1.ParseStatus.mergeArray(status, result);
+             });
+         }
+-        const result = [...ctx.data].map((item, i) => {
+-            return def.type._parseSync(new ParseInputLazyPath(ctx, item, ctx.path, i));
+-        });
++        const result = [];
++        for (let i = 0; i < ctx.data.length; i++) {
++            if (ctx.common.issues.length >= parseUtil_1.MAX_PARSE_ISSUES)
++                return parseUtil_1.INVALID;
++            result.push(def.type._parseSync(new ParseInputLazyPath(ctx, ctx.data[i], ctx.path, i)));
++        }
+         return parseUtil_1.ParseStatus.mergeArray(status, result);
+     }
+     get element() {
+@@ -2737,6 +2740,8 @@ class ZodRecord extends ZodType {
+         const keyType = this._def.keyType;
+         const valueType = this._def.valueType;
+         for (const key in ctx.data) {
++            if (ctx.common.issues.length >= parseUtil_1.MAX_PARSE_ISSUES)
++                return parseUtil_1.INVALID;
+             pairs.push({
+                 key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, key)),
+                 value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key], ctx.path, key)),
