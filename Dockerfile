@@ -58,7 +58,7 @@ WORKDIR /etc/logto
 ARG apk_cache_bust=
 
 # Security: patch known base-image and bundled-tool vulnerabilities.
-# - Upgrade OpenSSL/libcrypto3/libssl3 to the latest Alpine patch.
+# - Upgrade OpenSSL/libcrypto3/libssl3 and zlib to the latest Alpine patch.
 # - Refresh the globally-bundled npm, which carries its own vendored dependency tree.
 # - Drop npm's vendored undici (only pulled in by node-gyp for build-time native-module
 #   downloads, never exercised by the runtime `npm run start`). npm bundles undici 6.x, which
@@ -76,7 +76,7 @@ ARG apk_cache_bust=
 #   Keep tar last in the loop: `npm pack` uses npm's vendored tar, so replacing it before the
 #   other packs would run the untested copy for the rest of the loop.
 RUN echo "cache-bust: ${apk_cache_bust}" >/dev/null \
-  && apk --no-cache upgrade openssl libcrypto3 libssl3 \
+  && apk --no-cache upgrade openssl libcrypto3 libssl3 zlib \
   && npm install -g npm@latest \
   && for spec in brace-expansion@5.0.12 ip-address@10.7.2 tar@7.5.22; do \
        name="${spec%@*}"; \
