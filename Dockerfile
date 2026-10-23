@@ -78,7 +78,7 @@ ARG apk_cache_bust=
 RUN echo "cache-bust: ${apk_cache_bust}" >/dev/null \
   && apk --no-cache upgrade openssl libcrypto3 libssl3 zlib \
   && npm install -g npm@latest \
-  && for spec in brace-expansion@5.0.12 ip-address@10.7.2 tar@7.5.22; do \
+  && for spec in brace-expansion@5.0.12 ip-address@10.7.4 tar@7.5.22; do \
        name="${spec%@*}"; \
        npm pack "$spec" --pack-destination /tmp >/dev/null \
        && tar -xzf /tmp/"$name"-*.tgz -C /tmp \
