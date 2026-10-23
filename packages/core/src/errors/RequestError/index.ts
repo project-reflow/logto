@@ -1,4 +1,4 @@
-import type { LogtoErrorCode, LogtoErrorI18nKey } from '@logto/phrases';
+import type { LogtoErrorCode } from '@logto/phrases';
 import type { RequestErrorBody, RequestErrorMetadata } from '@logto/schemas';
 import type { Optional } from '@silverhand/essentials';
 import { conditional, pick } from '@silverhand/essentials';
@@ -41,7 +41,7 @@ export default class RequestError extends Error {
       ...interpolation
     } = typeof input === 'string' ? { code: input } : input;
 
-    const message = i18next.t<string, LogtoErrorI18nKey>(`errors:${code}`, {
+    const message = i18next.t(`errors:${code}`, {
       ...interpolation,
       interpolation: {
         // Disable i18next escape value since it's for API response, we can show HTML tags.
@@ -75,7 +75,7 @@ export default class RequestError extends Error {
    * For server-side log entries use the {@link RequestError.message} property instead.
    */
   toBody(i18next: i18n): RequestErrorBody {
-    const message = i18next.t<string, LogtoErrorI18nKey>(`errors:${this.code}`, {
+    const message = i18next.t(`errors:${this.code}`, {
       ...this.#i18nInterpolation,
       interpolation: {
         escapeValue: false,
