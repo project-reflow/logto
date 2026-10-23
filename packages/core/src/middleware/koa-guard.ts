@@ -125,6 +125,18 @@ const tryParse = <Output, Definition extends ZodTypeDef, Input>(
 };
 
 /**
+ * The largest JSON request body that a guarded route accepts. A larger body gets a 413 before
+ * the guard runs.
+ *
+ * zod 3 adds one issue per failing element of an array or record, with no upper bound, and the
+ * error response repeats every issue. At the koa-body default of 1 MB, one anonymous request can
+ * cost hundreds of milliseconds of CPU and tens to hundreds of MB of heap. Real JSON payloads are
+ * a few KB, so this limit leaves room for large console payloads (custom CSS, SAML metadata) and
+ * keeps the cost of a failing parse small. Form and text bodies keep the koa-body defaults.
+ */
+const jsonBodyLimit = '100kb';
+
+/**
  * `koa-body@8` unwraps single-element file arrays into scalars, while earlier versions always
  * produced an array per field for multipart uploads. Restore the array shape so that the file
  * guards (which expect arrays) keep working as before.
@@ -225,8 +237,9 @@ export default function koaGuard<
 
     try {
       await ((body ?? files)
-        ? koaBody<StateT, ContextT>({ multipart: Boolean(files) })(ctx, async () =>
-            guard(ctx, next)
+        ? koaBody<StateT, ContextT>({ multipart: Boolean(files), jsonLimit: jsonBodyLimit })(
+            ctx,
+            async () => guard(ctx, next)
           )
         : guard(ctx, next));
     } catch (error: unknown) {
