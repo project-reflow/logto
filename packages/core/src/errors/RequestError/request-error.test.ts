@@ -1,5 +1,3 @@
-import type { LogtoErrorI18nKey } from '@logto/phrases';
-
 import initI18n from '#src/i18n/init.js';
 import { i18next } from '#src/utils/i18n.js';
 
@@ -12,7 +10,7 @@ describe('RequestError', () => {
 
   it('standard RequestError use LogtoErrorCode', () => {
     const errorCode = 'auth.unauthorized';
-    const expectMessage = i18next.t<string, LogtoErrorI18nKey>(`errors:${errorCode}`);
+    const expectMessage = i18next.t(`errors:${errorCode}`);
     const data = { foo: 'foo' };
 
     const newRequestError = new RequestError(errorCode, data);
@@ -30,7 +28,7 @@ describe('RequestError', () => {
 
   it('standard RequestError use RequestErrorMetadata', () => {
     const errorCode = 'auth.unauthorized';
-    const expectMessage = i18next.t<string, LogtoErrorI18nKey>(`errors:${errorCode}`);
+    const expectMessage = i18next.t(`errors:${errorCode}`);
     const data = { foo: 'foo' };
 
     const newRequestError = new RequestError(
@@ -56,7 +54,7 @@ describe('RequestError', () => {
   it('RequestError with interpolation error message', () => {
     const errorCode = 'entity.create_failed';
     const entityName = 'mockEntity';
-    const expectMessage = i18next.t<string, LogtoErrorI18nKey>(`errors:${errorCode}`, {
+    const expectMessage = i18next.t(`errors:${errorCode}`, {
       name: entityName,
     });
 
