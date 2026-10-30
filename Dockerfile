@@ -40,8 +40,12 @@ RUN pnpm cli connector link $ADDITIONAL_CONNECTOR_ARGS -p .
 
 ### Prune dependencies for production ###
 # Keep prune + production install in one layer to avoid extra transient disk usage.
+# pnpm does not read NODE_ENV, so only `--prod` skips devDependencies. Without it every
+# devDependency of every workspace package ships in the image.
+# Remove the tunnel package first. It is a developer CLI that nothing at runtime imports,
+# and its proxy dependency is the only production path to micromatch and picomatch 2.
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
-  rm -rf node_modules packages/**/node_modules && NODE_ENV=production pnpm i
+  rm -rf node_modules packages/**/node_modules packages/tunnel && pnpm i --prod
 
 ### Clean up ###
 RUN rm -rf .scripts pnpm-*.yaml packages/cloud
