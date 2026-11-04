@@ -8,6 +8,7 @@ import { UAParser } from 'ua-parser-js';
 
 import RequestError from '#src/errors/RequestError/index.js';
 import type Queries from '#src/tenants/Queries.js';
+import { writeAuditLine } from '#src/utils/audit-stdout.js';
 import { getInjectedHeaderValues } from '#src/utils/injected-header-mapping.js';
 import {
   isRecord,
@@ -230,9 +231,13 @@ export default function koaAuditLog<StateT, ContextT extends IRouterParamContext
             ...payload,
           });
           const insert = idempotencyKey ? insertLogIfNotExists : insertLog;
+          const id = idempotencyKey ?? generateStandardId();
+
+          // Write the stdout audit line first, so a failed insert cannot drop it.
+          writeAuditLine(id, fullPayload);
 
           return insert({
-            id: idempotencyKey ?? generateStandardId(),
+            id,
             key: payload.key,
             payload: fullPayload,
           });
