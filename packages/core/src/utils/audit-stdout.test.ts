@@ -28,6 +28,10 @@ describe('shouldWriteAuditLine', () => {
     ['ExchangeTokenBy.ClientCredentials', LogResult.Success, true],
     ['ExchangeTokenBy.TokenExchange', LogResult.Success, true],
     ['ExchangeTokenBy.TokenExchange', LogResult.Error, true],
+    ['JwtCustomizer.AccessToken', LogResult.Success, false],
+    ['JwtCustomizer.AccessToken', LogResult.Error, true],
+    ['JwtCustomizer.ClientCredentials', LogResult.Success, false],
+    ['JwtCustomizer.ClientCredentials', LogResult.Error, true],
     ['TriggerHook.PostSignIn', LogResult.Success, false],
     ['TriggerHook.PostSignIn', LogResult.Error, false],
   ])('%s with result %s → %s', (key, result, expected) => {
@@ -324,7 +328,7 @@ describe('writeAuditLine', () => {
     jest.spyOn(process.stdout, 'write').mockImplementation(() => {
       throw new Error('EPIPE');
     });
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-empty-function -- silence the expected error line
     const error = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(() => {
