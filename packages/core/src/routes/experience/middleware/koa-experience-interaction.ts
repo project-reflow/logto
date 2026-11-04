@@ -80,6 +80,15 @@ export default function koaExperienceInteraction<
 
     try {
       await next();
+
+      // Name the identified user on the entries of a successful step too, such as an MFA
+      // verification, so the audit trail can tie each step to a person. A user id that the
+      // route set itself wins, because `prependAllLogEntries` puts this value first.
+      const { identifiedUserId } = ctx.experienceInteraction;
+
+      if (identifiedUserId) {
+        ctx.prependAllLogEntries({ userId: identifiedUserId });
+      }
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- make sure the interaction is initialized
       if (ctx.experienceInteraction) {
