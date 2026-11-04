@@ -42,6 +42,20 @@ const createTestContext = (headers: Record<string, string>): TestContext => {
   } as unknown as TestContext;
 };
 
+const parseAuditLines = (write: { mock: { calls: unknown[][] } }) =>
+  write.mock.calls
+    .map(([chunk]) => String(chunk))
+    .filter((chunk) => chunk.includes('"log_type":"audit"'))
+    .map((chunk): unknown => JSON.parse(chunk));
+
+const setUpStdoutCase = (ip: string, userAgent: string) => {
+  const write = jest.spyOn(process.stdout, 'write').mockImplementation(() => true);
+  const ctx: TestContext = createTestContext({ 'user-agent': userAgent });
+  ctx.request.ip = ip;
+
+  return { write, ctx };
+};
+
 describe('koaAuditLog middleware', () => {
   const logKey: LogKey = 'Interaction.SignIn.Identifier.VerificationCode.Submit';
   const mockPayload: LogPayload = {
@@ -54,8 +68,14 @@ describe('koaAuditLog middleware', () => {
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36';
   const userAgentParsed = new UAParser(userAgent).getResult();
 
+  beforeEach(() => {
+    // Keep the audit lines of every case out of the test output.
+    jest.spyOn(process.stdout, 'write').mockImplementation(() => true);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('should insert a success log when next() does not throw an error', async () => {
@@ -455,6 +475,40 @@ describe('koaAuditLog middleware', () => {
         key: logKey,
         result: LogResult.Success,
       }),
+    });
+  });
+
+  describe('stdout audit line', () => {
+    it('should write one audit line per entry, with the id of the inserted row', async () => {
+      const { write, ctx } = setUpStdoutCase(ip, userAgent);
+
+      await koaLog(queries)(ctx, async () => {
+        ctx.createLog(logKey).append(mockPayload);
+      });
+
+      expect(parseAuditLines(write)).toEqual([
+        expect.objectContaining({
+          log_type: 'audit',
+          action: `logto.${logKey}`,
+          actor_id: 'foo',
+          client_ip: ip,
+          metadata: { log_id: mockId, result: LogResult.Success },
+        }),
+      ]);
+      expect(insertLog).toHaveBeenCalledWith(expect.objectContaining({ id: mockId }));
+    });
+
+    it('should write the audit line even when the insert fails', async () => {
+      const { write, ctx } = setUpStdoutCase(ip, userAgent);
+      insertLog.mockRejectedValueOnce(new Error('database unavailable'));
+
+      await expect(
+        koaLog(queries)(ctx, async () => {
+          ctx.createLog(logKey).append(mockPayload);
+        })
+      ).rejects.toThrow('database unavailable');
+
+      expect(parseAuditLines(write)).toHaveLength(1);
     });
   });
 

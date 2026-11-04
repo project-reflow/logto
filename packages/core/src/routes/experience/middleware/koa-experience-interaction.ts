@@ -76,5 +76,16 @@ export default function koaExperienceInteraction<
 
       throw error;
     }
+
+    // `save()` names the user only on the entries that exist when it runs. Name the identified
+    // user on every entry of a successful step too, so that an entry created after `save()`, or
+    // in a step that does not save, ties to a person. This code is outside the `try`, so a
+    // failure here is not logged as a failed step. A user id that the route set itself wins,
+    // because `prependAllLogEntries` puts this value first.
+    const { identifiedUserId } = ctx.experienceInteraction;
+
+    if (identifiedUserId) {
+      ctx.prependAllLogEntries({ userId: identifiedUserId });
+    }
   };
 }
