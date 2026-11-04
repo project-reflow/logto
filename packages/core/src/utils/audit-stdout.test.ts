@@ -232,6 +232,27 @@ describe('toAuditLine', () => {
     expect(JSON.stringify(line)).not.toContain('client_secret');
   });
 
+  it('keeps a CIMD client id of the full column width, and cuts a longer one there', () => {
+    const fullWidth = `https://client.example/${'a'.repeat(2048 - 23)}`;
+    const keep = toAuditLine(
+      'log-16',
+      { key: 'Interaction.SignIn.Submit', result: LogResult.Success, cimdClientId: fullWidth },
+      occurredAt
+    );
+    const cut = toAuditLine(
+      'log-17',
+      {
+        key: 'ExchangeTokenBy.ClientCredentials',
+        result: LogResult.Error,
+        params: { client_id: `${fullWidth}-and-more` },
+      },
+      occurredAt
+    );
+
+    expect(keep.actor_client_id).toBe(fullWidth);
+    expect(cut.actor_client_id).toBe(fullWidth);
+  });
+
   it('names a CIMD client when the entry has no registered application', () => {
     const line = toAuditLine(
       'log-14',

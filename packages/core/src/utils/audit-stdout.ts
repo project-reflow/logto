@@ -28,6 +28,13 @@ const auditConsole = new ConsoleLog(chalk.yellow('audit'));
 /** The longest string a metadata value may hold. */
 const metadataStringMaxLength = 256;
 
+/**
+ * The longest id the line holds. A CIMD client id can be as long as its `varchar(2048)`
+ * column, and a cut id could match another client. The bound still keeps a `client_id` that a
+ * caller sends from making the line too long.
+ */
+const idMaxLength = 2048;
+
 /** The actor id when the entry names no user, such as a sign-in with an unknown identifier. */
 export const anonymousActorId = 'anonymous';
 
@@ -91,10 +98,15 @@ export const shouldWriteAuditLine = (key: string, result: LogResult): boolean =>
   return true;
 };
 
+const nonEmptyString = (value: unknown, maxLength: number): string | undefined =>
+  typeof value === 'string' && value.length > 0 ? value.slice(0, maxLength) : undefined;
+
+/** A short descriptor for `metadata`, such as an error code. */
 const asString = (value: unknown): string | undefined =>
-  typeof value === 'string' && value.length > 0
-    ? value.slice(0, metadataStringMaxLength)
-    : undefined;
+  nonEmptyString(value, metadataStringMaxLength);
+
+/** An id: a user, a client, an address, or a session. */
+const asId = (value: unknown): string | undefined => nonEmptyString(value, idMaxLength);
 
 /**
  * The error code of an entry. A `RequestError` stores a record with `code`. An OIDC provider
@@ -122,9 +134,9 @@ const topOrNested = (payload: LogContextPayload, field: string): string | undefi
  * caller sent. A client id is not a secret.
  */
 const clientId = (payload: LogContextPayload): string | undefined =>
-  asString(payload.applicationId) ??
-  asString(payload.cimdClientId) ??
-  (isRecord(payload.params) ? asString(payload.params.client_id) : undefined);
+  asId(payload.applicationId) ??
+  asId(payload.cimdClientId) ??
+  (isRecord(payload.params) ? asId(payload.params.client_id) : undefined);
 
 /**
  * The OIDC session id is also the value of the session cookie. The cookie is signed, so the
@@ -141,7 +153,7 @@ export const toAuditLine = (
   occurredAt: Date
 ): AuditLine => {
   const { key, result } = payload;
-  const userId = asString(payload.userId);
+  const userId = asId(payload.userId);
   const client = clientId(payload);
   const isService = clientCredentialsKeys.has(key);
   const actorId = (isService ? client : userId) ?? anonymousActorId;
@@ -151,7 +163,7 @@ export const toAuditLine = (
     log_id: logId,
     result,
     error_code: errorCode(payload.error),
-    session_id_sha256: hashSessionId(asString(payload.sessionId)),
+    session_id_sha256: hashSessionId(asId(payload.sessionId)),
     connector_id: topOrNested(payload, 'connectorId'),
     verification_id: topOrNested(payload, 'verificationId'),
   };
@@ -170,7 +182,7 @@ export const toAuditLine = (
     organization_id: null,
     project_id: null,
     correlation_id: null,
-    client_ip: asString(payload.ip) ?? null,
+    client_ip: asId(payload.ip) ?? null,
     metadata: removeUndefinedKeys(metadata),
   };
 };
