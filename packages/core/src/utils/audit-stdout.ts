@@ -61,16 +61,19 @@ type AuditLine = {
 // Built from the schema enums, so an upstream rename fails the build instead of changing the
 // filter in silence.
 const tokenExchangePrefix = `${token.Type.ExchangeTokenBy}.`;
+const jwtCustomizerPrefix = `${jwtCustomizer.prefix}.`;
 const webhookPrefix = `${hook.Type.TriggerHook}.`;
-/** The keys of a client credentials grant: a machine acting on its own credentials. */
+/** The key of a client credentials grant: a machine acting on its own credentials. */
+const clientCredentialsGrantKey = `${token.Type.ExchangeTokenBy}.${token.ExchangeByType.ClientCredentials}`;
+/** The keys of a client credentials grant and of its JWT customizer run. */
 const clientCredentialsKeys = new Set<string>([
-  `${token.Type.ExchangeTokenBy}.${token.ExchangeByType.ClientCredentials}`,
-  `${jwtCustomizer.prefix}.${jwtCustomizer.Type.ClientCredentials}`,
+  clientCredentialsGrantKey,
+  `${jwtCustomizerPrefix}${jwtCustomizer.Type.ClientCredentials}`,
 ]);
 /**
  * The key of a token exchange (RFC 8693): a service gets a delegated token to act for a person.
- * The audit schema calls a client that acts for a person an `agent`: the person is the actor,
- * and the client is `actor_client_id`.
+ * The line calls a client that acts for a person an `agent`: the person is the actor, and the
+ * client is `actor_client_id`.
  */
 const tokenExchangeKey = `${token.Type.ExchangeTokenBy}.${token.ExchangeByType.TokenExchange}`;
 
@@ -80,10 +83,7 @@ const tokenExchangeKey = `${token.Type.ExchangeTokenBy}.${token.ExchangeByType.T
  * actions to audit. The other grants (authorization code, refresh token, device code) come with
  * each sign-in or token refresh, so only a failure of one of them is written.
  */
-const auditedSuccessfulGrantKeys = new Set<string>([
-  `${token.Type.ExchangeTokenBy}.${token.ExchangeByType.ClientCredentials}`,
-  `${token.Type.ExchangeTokenBy}.${token.ExchangeByType.TokenExchange}`,
-]);
+const auditedSuccessfulGrantKeys = new Set<string>([clientCredentialsGrantKey, tokenExchangeKey]);
 
 /** Whether an entry goes to stdout. Webhook delivery entries are not user actions. */
 export const shouldWriteAuditLine = (key: string, result: LogResult): boolean => {
@@ -93,6 +93,12 @@ export const shouldWriteAuditLine = (key: string, result: LogResult): boolean =>
 
   if (key.startsWith(tokenExchangePrefix)) {
     return result === LogResult.Error || auditedSuccessfulGrantKeys.has(key);
+  }
+
+  // A JWT customizer runs on each token that Logto issues, also on a refresh. So only a failed
+  // run is written. The grant entry of the same request records a successful grant.
+  if (key.startsWith(jwtCustomizerPrefix)) {
+    return result === LogResult.Error;
   }
 
   return true;

@@ -70,8 +70,14 @@ describe('koaAuditLog middleware', () => {
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36';
   const userAgentParsed = new UAParser(userAgent).getResult();
 
+  beforeEach(() => {
+    // Keep the audit lines of every case out of the test output.
+    jest.spyOn(process.stdout, 'write').mockImplementation(() => true);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('should insert a success log when next() does not throw an error', async () => {
@@ -475,10 +481,6 @@ describe('koaAuditLog middleware', () => {
   });
 
   describe('stdout audit line', () => {
-    afterEach(() => {
-      jest.restoreAllMocks();
-    });
-
     it('should write one audit line per entry, with the id of the inserted row', async () => {
       const { write, ctx } = setUpStdoutCase(ip, userAgent);
 
