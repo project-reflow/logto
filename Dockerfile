@@ -67,13 +67,30 @@ ARG apk_cache_bust=
 # - Drop npm's vendored undici (only pulled in by node-gyp for build-time native-module
 #   downloads, never exercised by the runtime `npm run start`). npm bundles undici 6.x, which
 #   can't reach the 7.x fixes, so removal clears CVE-2026-12151 and related advisories.
-# - npm 12.2.2 vendors brace-expansion 5.0.12, ip-address 10.7.5 and tar 7.5.22, which are at
-#   or above every patched release this image once unpacked over npm's vendored copies. That
-#   replacement step is gone: with this npm it would only downgrade ip-address.
+# - Fail the build when npm vendors a copy below its patched release: brace-expansion 5.0.12
+#   (CVE-2026-69152, CVE-2026-14257), ip-address 10.7.4 (CVE-2026-69192) and tar 7.5.22
+#   (CVE-2026-73566, CVE-2026-59873). npm@latest floats, so a later npm could bring an old copy
+#   back. This image used to unpack fixed releases over the vendored copies instead, but once
+#   npm shipped newer ones that step only downgraded them. Check the floor; never replace.
 RUN echo "cache-bust: ${apk_cache_bust}" >/dev/null \
   && apk --no-cache upgrade openssl libcrypto3 libssl3 zlib \
   && npm install -g npm@latest \
   && rm -rf /usr/local/lib/node_modules/npm/node_modules/undici \
+  && node -e ' \
+       const floors = { "brace-expansion": "5.0.12", "ip-address": "10.7.4", tar: "7.5.22" }; \
+       const parse = (v) => v.split("-")[0].split(".").map(Number); \
+       const below = (v, f) => { \
+         const [a, b] = [parse(v), parse(f)]; \
+         for (let i = 0; i < 3; i++) if (a[i] !== b[i]) return a[i] < b[i]; \
+         return false; \
+       }; \
+       let failed = false; \
+       for (const [name, floor] of Object.entries(floors)) { \
+         const { version } = require(`/usr/local/lib/node_modules/npm/node_modules/${name}/package.json`); \
+         console.log(`npm vendors ${name} ${version} (floor ${floor})`); \
+         if (below(version, floor)) { console.error(`${name} ${version} is below ${floor}`); failed = true; } \
+       } \
+       process.exit(failed ? 1 : 0);' \
   && npm cache clean --force
 
 ARG logto_oss_survey_endpoint=
