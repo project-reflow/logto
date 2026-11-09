@@ -49,12 +49,12 @@ overrides:
   nanoid@<3.3.17: ^3.3.17
   nanoid@>=4.0.0 <5.1.16: ^5.1.16
   node-forge@<1.4.2: ^1.4.2
-  playwright: 1.64.1
-  playwright-core: 1.64.1
   nodemailer@<10.1.4: ^10.1.4
   path-to-regexp@>=8.0.0 <8.4.0: ^8.4.0
   picomatch@<2.3.2: ^2.3.2
   picomatch@>=4.0.0 <4.0.4: ^4.0.4
+  playwright: 1.64.1
+  playwright-core: 1.64.1
   playwright@<1.55.1: ^1.55.1
   postcss@<8.5.18: ^8.5.18
   postcss-selector-parser@<7.1.6: ^7.1.6
@@ -70,9 +70,12 @@ overrides:
   tmp@<0.2.6: ^0.2.6
   uuid@<11.1.1: ^11.1.1
   vite@<=6.4.3: ^6.4.4
-  ws@>=7.0.0 <7.5.11: ^7.5.11
-  ws@>=8.0.0 <8.21.0: ^8.21.0
+  ws@>=7.0.0 <7.5.12: ^7.5.12
+  ws@>=8.0.0 <8.21.1: ^8.21.1
   yaml@>=2.0.0 <2.8.3: ^2.8.3
+  decode-uri-component@<0.5.1: ^0.5.1
+  i18next@<26.4.4: ^26.4.4
+  node-rsa@<2.0.0: ^2.0.0
 
 importers:
 
@@ -84,6 +87,9 @@ importers:
       '@logto/translate':
         specifier: workspace:^
         version: link:packages/translate
+      pg:
+        specifier: ^8.8.0
+        version: 8.11.3
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.6
@@ -103,9 +109,6 @@ importers:
       husky:
         specifier: ^9.0.0
         version: 9.0.7
-      pg:
-        specifier: ^8.8.0
-        version: 8.11.3
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(@swc/core@1.3.52(@swc/helpers@0.5.1))(jiti@1.21.0)(postcss@8.5.23)(typescript@5.9.3)(yaml@2.8.4)
@@ -237,8 +240,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.4.4
+        version: 26.7.2(typescript@5.9.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -283,7 +286,7 @@ importers:
         version: 6.1.0(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.7.2(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-modal:
         specifier: ^3.15.1
         version: 3.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3968,8 +3971,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.4.4
+        version: 26.7.2(typescript@5.9.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -4074,7 +4077,7 @@ importers:
         version: 2.2.0(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.7.2(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-markdown:
         specifier: ^9.0.0
         version: 9.0.3(@types/react@18.3.3)(react@18.3.1)
@@ -4262,8 +4265,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.4.4
+        version: 26.7.2(typescript@5.9.3)
       iconv-lite:
         specifier: 0.6.3
         version: 0.6.3
@@ -4542,8 +4545,8 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.4.4
+        version: 26.7.2(typescript@5.9.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -4567,7 +4570,7 @@ importers:
         version: 6.1.0(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.7.2(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       stylelint:
         specifier: ^15.0.0
         version: 15.11.0(typescript@5.9.3)
@@ -4843,8 +4846,8 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       i18next:
-        specifier: ^22.4.15
-        version: 22.4.15
+        specifier: ^26.4.4
+        version: 26.7.2(typescript@5.9.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -4910,7 +4913,7 @@ importers:
         version: 7.56.1(react@18.3.1)
       react-i18next:
         specifier: ^12.3.1
-        version: 12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.1(i18next@26.7.2(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-modal:
         specifier: ^3.15.1
         version: 3.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6725,6 +6728,10 @@ packages:
   '@noble/hashes@1.8.0':
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
     engines: {node: ^14.21.3 || >=16}
+
+  '@noble/hashes@2.4.0':
+    resolution: {integrity: sha512-X5XaVWZIBCT7HHZGm5I7ZQXDwLG+bGXuSrMQAW+7Zvl87h1kmc1ZB1VSRJcpUfoUrGQp4Fkoxm5kZ+Ms+aW+eA==}
+    engines: {node: '>= 20.19.0'}
 
   '@nodable/entities@2.1.0':
     resolution: {integrity: sha512-nyT7T3nbMyBI/lvr6L5TyWbFJAI9FTgVRakNoBqCD+PmID8DzFrrNdLLtHMwMszOtqZa8PAOV24ZqDnQrhQINA==}
@@ -9248,9 +9255,6 @@ packages:
   asap@2.0.6:
     resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
 
-  asn1@0.2.6:
-    resolution: {integrity: sha512-ix/FxPn0MDjeyJ7i/yoHGFt/EX6LyNbxSEhPPXODPL+KB0VPk86UYfL0lMdy+KCnv+fmvIzySwaK5COwqVbWTQ==}
-
   asn1js@3.0.10:
     resolution: {integrity: sha512-S2s3aOytiKdFRdulw2qPE51MzjzVOisppcVv7jVFR+Kw0kxwvFrDcYA0h7Ndqbmj0HkMIXYWaoj7fli8kgx1eg==}
     engines: {node: '>=12.0.0'}
@@ -10251,8 +10255,8 @@ packages:
   decode-named-character-reference@1.2.0:
     resolution: {integrity: sha512-c6fcElNV6ShtZXmsgNgFFV5tVX2PaV4g+MOAkb8eXHvn6sryJBrZa9r0zV6+dtTyoCKxtDy5tyQ5ZwQuidtd+Q==}
 
-  decode-uri-component@0.5.0:
-    resolution: {integrity: sha512-1BiQVoK8C9gUbQU6NzAtO/tkz2qOFpEObMWpcFvhx4fYnj4Oc5yzaJN/LD36ihkVUdXyh5ZekzX+yM+ty/SrPg==}
+  decode-uri-component@0.5.1:
+    resolution: {integrity: sha512-vWHQkXgg2cE3BB4rR0c+PYw9BCQzLoNIRMI7AunIkZst74tw/vpPp7VLoYtsR/cy1f55g3XDWUslfeCZjiZJyA==}
     engines: {node: '>=14.16'}
 
   decompress-response@6.0.0:
@@ -11527,8 +11531,13 @@ packages:
   i18next-browser-languagedetector@8.0.0:
     resolution: {integrity: sha512-zhXdJXTTCoG39QsrOCiOabnWj2jecouOqbchu3EfhtSHxIB5Uugnm9JaizenOy39h7ne3+fLikIjeW88+rgszw==}
 
-  i18next@22.4.15:
-    resolution: {integrity: sha512-yYudtbFrrmWKLEhl6jvKUYyYunj4bTBCe2qIUYAxbXoPusY7YmdwPvOE6fx6UIfWvmlbCWDItr7wIs8KEBZ5Zg==}
+  i18next@26.7.2:
+    resolution: {integrity: sha512-RsOY3BeaCDdkk52NeJSFAXELQ2rQXBO/tOub6L8ue2ICPfR/FRDWDOfEDg4xMPd1SqO5goVYQ6i72qWEUB/PPw==}
+    peerDependencies:
+      typescript: ^5 || ^6 || ^7
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -11933,7 +11942,7 @@ packages:
   isows@1.0.7:
     resolution: {integrity: sha512-I1fSfDCZL5P0v33sVqeTDSpcstAg/N+wF5HS033mogOVIp4B+oHC7oOCsA3axAbBSGTJ8QubbNmnIRN/h8U7hg==}
     peerDependencies:
-      ws: ^7.5.11
+      ws: ^7.5.12
 
   istanbul-lib-coverage@3.2.2:
     resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
@@ -13231,8 +13240,9 @@ packages:
     resolution: {integrity: sha512-mIrE/Cw9y+9Au6dS5vDKDhQza9YvG6w+ZrS6X+ZzA7yFW/soAeaups4Qzn1bL6g5FVy8WtP79+0j82oPIbqRjQ==}
     engines: {node: '>=18'}
 
-  node-rsa@1.1.1:
-    resolution: {integrity: sha512-Jd4cvbJMryN21r5HgxQOpMEqv+ooke/korixNNK3mGqfGJmy0M77WDDzo/05969+OkMy3XW1UuZsSmW9KQm7Fw==}
+  node-rsa@2.0.0:
+    resolution: {integrity: sha512-7yfzccmBd5rm7pALJf709tPwLL987WvdT7LC/QK5Oxa5S2aabdBPjxRDxhWKkbfCc9/FiC82lwSc+ulGZHH44g==}
+    engines: {node: '>=20'}
 
   node-xmllint@1.0.0:
     resolution: {integrity: sha512-71UV2HRUP+djvHpdyatiuv+Y1o8hI4ZI7bMfuuoACMLR1JJCErM4WXAclNeHd6BgHXkqeqnnAk3wpDkSQWmFXw==}
@@ -14164,7 +14174,7 @@ packages:
   react-i18next@12.3.1:
     resolution: {integrity: sha512-5v8E2XjZDFzK7K87eSwC7AJcAkcLt5xYZ4+yTPDAW1i7C93oOY1dnr4BaQM7un4Hm+GmghuiPvevWwlca5PwDA==}
     peerDependencies:
-      i18next: '>= 19.0.0'
+      i18next: ^26.4.4
       react: '>= 16.8.0'
       react-dom: '*'
       react-native: '*'
@@ -15816,8 +15826,8 @@ packages:
     resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  ws@7.5.11:
-    resolution: {integrity: sha512-zS54Oen9bITtp7kp2XM3AydrCIq1D+HwJOuH+c+e4LfpL/lotP5osijd+UoMnxwAam1GN8R4KtLAyIrIcBNpiA==}
+  ws@7.5.13:
+    resolution: {integrity: sha512-rsKI6xDBFVf4r/x8XyChGK04QR/XHroxs/jUcoWvtEZM8TPU/X/uIY9B1CsSzYws9ZJb/6bbBu7dPhFW00CAoA==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -15828,8 +15838,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.21.0:
-    resolution: {integrity: sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==}
+  ws@8.22.2:
+    resolution: {integrity: sha512-/rEZ2ejown2N5gxVTHUu9bVVC7ttu0/Tgzf5hbTOixR3Fs7mbbXgn2DbdbcKgJOmpQMtrIUWivtYuVMnp/W/yA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -17898,6 +17908,8 @@ snapshots:
       '@noble/hashes': 1.8.0
 
   '@noble/hashes@1.8.0': {}
+
+  '@noble/hashes@2.4.0': {}
 
   '@nodable/entities@2.1.0': {}
 
@@ -20490,7 +20502,7 @@ snapshots:
       mime-types: 2.1.35
       parse5: 6.0.1
       picomatch: 2.3.2
-      ws: 7.5.11
+      ws: 7.5.13
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -20515,7 +20527,7 @@ snapshots:
       mime-types: 2.1.35
       parse5: 6.0.1
       picomatch: 2.3.2
-      ws: 7.5.11
+      ws: 7.5.13
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -20968,10 +20980,6 @@ snapshots:
   arrify@2.0.1: {}
 
   asap@2.0.6: {}
-
-  asn1@0.2.6:
-    dependencies:
-      safer-buffer: 2.1.2
 
   asn1js@3.0.10:
     dependencies:
@@ -21973,7 +21981,7 @@ snapshots:
     dependencies:
       character-entities: 2.0.2
 
-  decode-uri-component@0.5.0: {}
+  decode-uri-component@0.5.1: {}
 
   decompress-response@6.0.0:
     dependencies:
@@ -23540,9 +23548,9 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
 
-  i18next@22.4.15:
-    dependencies:
-      '@babel/runtime': 7.28.4
+  i18next@26.7.2(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
 
   iconv-lite@0.4.24:
     dependencies:
@@ -23888,9 +23896,9 @@ snapshots:
 
   iso8601-duration@2.1.2: {}
 
-  isows@1.0.7(ws@8.21.0):
+  isows@1.0.7(ws@8.22.2):
     dependencies:
-      ws: 8.21.0
+      ws: 8.22.2
 
   istanbul-lib-coverage@3.2.2: {}
 
@@ -24400,7 +24408,7 @@ snapshots:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.21.0
+      ws: 8.22.2
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -24428,7 +24436,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.21.0
+      ws: 8.22.2
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -25893,9 +25901,9 @@ snapshots:
 
   node-releases@2.0.55: {}
 
-  node-rsa@1.1.1:
+  node-rsa@2.0.0:
     dependencies:
-      asn1: 0.2.6
+      '@noble/hashes': 2.4.0
 
   node-xmllint@1.0.0: {}
 
@@ -26710,7 +26718,7 @@ snapshots:
       debug: 4.4.3(supports-color@10.0.0)
       devtools-protocol: 0.0.1367902
       typed-query-selector: 2.12.0
-      ws: 8.21.0
+      ws: 8.22.2
     transitivePeerDependencies:
       - bare-buffer
       - bufferutil
@@ -26724,7 +26732,7 @@ snapshots:
       debug: 4.4.3(supports-color@10.0.0)
       devtools-protocol: 0.0.1425554
       typed-query-selector: 2.12.0
-      ws: 8.21.0
+      ws: 8.22.2
     transitivePeerDependencies:
       - bare-buffer
       - bufferutil
@@ -26769,7 +26777,7 @@ snapshots:
 
   query-string@9.5.1:
     dependencies:
-      decode-uri-component: 0.5.0
+      decode-uri-component: 0.5.1
       filter-obj: 5.1.0
       split-on-first: 3.0.0
 
@@ -26890,11 +26898,11 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  react-i18next@12.3.1(i18next@22.4.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-i18next@12.3.1(i18next@26.7.2(typescript@5.9.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.28.4
       html-parse-stringify: 3.0.1
-      i18next: 22.4.15
+      i18next: 26.7.2(typescript@5.9.3)
       react: 18.3.1
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
@@ -27416,7 +27424,7 @@ snapshots:
     dependencies:
       '@authenio/xml-encryption': 2.0.2
       '@xmldom/xmldom': 0.8.15
-      node-rsa: 1.1.1
+      node-rsa: 2.0.0
       xml: 1.0.1
       xml-crypto: 6.1.2
       xml-escape: 1.1.0
@@ -28513,9 +28521,9 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.2.3(typescript@5.9.3)(zod@3.24.3)
-      isows: 1.0.7(ws@8.21.0)
+      isows: 1.0.7(ws@8.22.2)
       ox: 0.14.56(typescript@5.9.3)(zod@3.24.3)
-      ws: 8.21.0
+      ws: 8.22.2
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -28770,9 +28778,9 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
 
-  ws@7.5.11: {}
+  ws@7.5.13: {}
 
-  ws@8.21.0: {}
+  ws@8.22.2: {}
 
   xml-crypto@6.1.2:
     dependencies:
