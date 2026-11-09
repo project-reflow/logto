@@ -21,7 +21,7 @@ import { removeUndefinedKeys } from '@silverhand/essentials';
 import chalk from 'chalk';
 
 import { safeParseJson } from '#src/utils/json.js';
-import { isRecord } from '#src/utils/sensitive-data.js';
+import { isRecord } from '#src/utils/type.js';
 
 const auditConsole = new ConsoleLog(chalk.yellow('audit'));
 
