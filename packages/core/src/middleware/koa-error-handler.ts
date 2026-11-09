@@ -1,5 +1,4 @@
 import { appInsights } from '@logto/app-insights/node';
-import type { LogtoErrorI18nKey } from '@logto/phrases';
 import type { RequestErrorBody } from '@logto/schemas';
 import { isHttpError } from 'http-errors';
 import type { Middleware } from 'koa';
@@ -22,7 +21,7 @@ const toSafeBody = (body: RequestErrorBody, i18n: WithI18nContext['i18n']): Requ
   return {
     ...body,
     data,
-    message: i18n.t<string, LogtoErrorI18nKey>(`errors:${body.code}`, {
+    message: i18n.t(`errors:${body.code}`, {
       ...(typeof data === 'object' && data !== null ? data : {}),
       interpolation: { escapeValue: false },
     }),
